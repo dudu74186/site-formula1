@@ -11,6 +11,7 @@ def getapicardata(numdrive, sessao):
     dados = json.loads(response.read().decode('utf-8'))
     return dados
 
+#Alterar para um modo mais eficiente utilizando interpolação e sugestões do chat, utlizar banco de dados do django
 def percorreapi(dados):
     df = pd.DataFrame(dados)
     for i, row in df.iterrows():
@@ -23,6 +24,7 @@ def percorreapi(dados):
             time.sleep(delay)
             return row
 
+#Verificar a necessidade dessas funções abaixo
 def deltatime(segprox, segant):
     segant = segant.split("+")
     segant = segant[0]
