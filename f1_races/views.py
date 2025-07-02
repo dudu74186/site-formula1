@@ -1,3 +1,12 @@
 from django.shortcuts import render
+from django.http import HttpResponse
 
 # Create your views here.
+def test_view(request):
+    """
+    A simple test view that renders a template.
+    """
+    context = {
+        'message': 'This is a test view!'
+    }
+    return HttpResponse(context['message'])
