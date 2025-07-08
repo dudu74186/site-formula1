@@ -3,7 +3,7 @@ from django.core.management.base import BaseCommand
 from django.core.exceptions import ValidationError
 
 # IMPORTANTE: Substitua 'dados_carro' pelo nome real do seu app Django.
-from f1_races.models import car_data 
+from f1_races.models import sessions
 
 class Command(BaseCommand):
     help = 'Importa dados de telemetria de um arquivo CSV para o banco de dados.'
@@ -27,17 +27,23 @@ class Command(BaseCommand):
                     try:
                         # O método update_or_create é perfeito para a sua regra 'unique_together'.
                         # Ele usará os campos a seguir para buscar um registro.
-                        obj, created = car_data.objects.update_or_create(
-                            driver_number=row['driver_number'],
+                        obj, created = sessions.objects.update_or_create(
+                            year=row['year'],
                             session_key=row['session_key'],
-                            date=row['date'],
+                            date_start=row['date_start'],
                             # O dicionário 'defaults' contém os campos que serão atualizados
                             # ou usados para criar o novo registro.
                             defaults={
-                                'speed': row['speed'],
-                                'throttle': row['throttle'],
-                                'brake': row['brake'],
-                                'n_gear': row['n_gear'],
+                                'circuit_key': row['circuit_key'],
+                                'circuit_short_name': row['circuit_short_name'],
+                                'country_code': row['country_code'],
+                                'country_key': row['country_key'],
+                                'country_name': row['country_name'],
+                                'date_end': row['date_end'],
+                                'gmt_offset': row['gmt_offset'],
+                                'location': row['location'],
+                                'session_name': row['session_name'],
+                                'session_type': row['session_type'],
                                 'meeting_key': row['meeting_key'],
                             }
                         )

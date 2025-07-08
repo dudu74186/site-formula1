@@ -18,7 +18,7 @@ class car_data(models.Model):
     
 class driver(models.Model):
     broadcast_name = models.CharField(max_length=100)
-    driver_number = models.IntegerField(unique=True)
+    driver_number = models.IntegerField()
     first_name = models.CharField(max_length=50)
     full_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=50)
@@ -34,3 +34,21 @@ class driver(models.Model):
         return f"{self.full_name} ({self.driver_number}) - {self.team_name}"
 
 
+class sessions(models.Model):
+    circuit_key = models.IntegerField()
+    circuit_short_name = models.CharField(max_length=100)
+    country_code = models.CharField(max_length=4)
+    country_key = models.IntegerField()
+    country_name = models.CharField(max_length=100)
+    date_end = models.DateTimeField()
+    date_start = models.DateTimeField()
+    gmt_offset = models.CharField(max_length=10)
+    location = models.CharField(max_length=100)
+    meeting_key = models.IntegerField()
+    session_key = models.IntegerField()
+    session_name = models.CharField(max_length=100)
+    session_type = models.CharField(max_length=50)
+    year = models.IntegerField()
+
+    def __str__(self):
+        return f"{self.session_name} - {self.circuit_short_name} ({self.year})"
