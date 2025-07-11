@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        {% block title %}
+            F1 estatisticas
+        {% endblock title %}
+    </title>
+</head>
+<body>
+    <h1>
+        {% block content %}   
+            Estatísticas da Fórmula 1
+        {% endblock content %}
+    </h1>
+    <p>
+        {% block paragrafo %}
+            Bem-vindo ao site de estatísticas da Fórmula 1. Aqui você encontrará informações sobre corridas, pilotos e equipes.
+        {% endblock paragrafo %}
+    </p>
+    <a href="{% url 'redirecionamento' %}">Ir para a página de redirecionamento</a>
+</body>
+</html>
