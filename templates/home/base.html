@@ -1,25 +1,44 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <title>
-        {% block title %}
-            F1 estatisticas
-        {% endblock title %}
+        {% block janela %}
+            F1 estatisticas 
+        {% endblock janela %}
     </title>
 </head>
 <body>
-    <h1>
+
+    <header class="main-header">
+        <div class="logo-container">
+            <h1 class="logo">
+                {% block title %}
+                    F1 Estatísticas
+                {% endblock title %}
+            </h1>
+            <nav>
+                <ul>
+                    <li><a href="{% url 'home' %}">Início</a></li>
+                    <li><a href="{% url 'redirecionamento' %}">Redirecionamento</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <h1 div class="titulo">
         {% block content %}   
             Estatísticas da Fórmula 1
         {% endblock content %}
     </h1>
-    <p>
+    <p class="paragrafo">
         {% block paragrafo %}
             Bem-vindo ao site de estatísticas da Fórmula 1. Aqui você encontrará informações sobre corridas, pilotos e equipes.
         {% endblock paragrafo %}
     </p>
-    <a href="{% url 'redirecionamento' %}">Ir para a página de redirecionamento</a>
 </body>
 </html>
