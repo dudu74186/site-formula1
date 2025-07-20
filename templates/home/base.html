@@ -1,4 +1,5 @@
 {% load static %}
+{% load render_table from django_tables2 %}
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -13,7 +14,6 @@
     </title>
 </head>
 <body>
-
     <header class="main-header">
         <div class="logo-container">
             <h1 class="logo">
@@ -29,16 +29,17 @@
             </nav>
         </div>
     </header>
+    
+    {% block body %}
+        <h1 class="titulo"> 
+                Estatísticas da Fórmula 1
+        </h1>
+        <p class="paragrafo">
+                Bem-vindo ao site de estatísticas da Fórmula 1. Aqui você encontrará informações sobre corridas, pilotos e equipes.
+        </p>
 
-    <h1 div class="titulo">
-        {% block content %}   
-            Estatísticas da Fórmula 1
-        {% endblock content %}
-    </h1>
-    <p class="paragrafo">
-        {% block paragrafo %}
-            Bem-vindo ao site de estatísticas da Fórmula 1. Aqui você encontrará informações sobre corridas, pilotos e equipes.
-        {% endblock paragrafo %}
-    </p>
+        {% render_table object_list %}
+
+    {% endblock body %}
 </body>
 </html>

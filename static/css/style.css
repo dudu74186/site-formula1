@@ -54,6 +54,8 @@ body {
         justify-content: space-between;
         background-color: #ff0000b9;
         font-family: 'f1-black', sans-serif;
+        border-color: #1eff00 20px;
+        
 
         .logo {
             padding: 10px;
@@ -85,4 +87,53 @@ body {
     color: #000000;
     margin-top: 10px;
     margin-bottom: 20px;
+}
+
+/* Estilo geral para a tabela */
+.django-tables2 table {
+    width: 100%;
+    border-collapse: collapse; /* Remove espaço entre as bordas */
+    margin: 20px 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Estilo para o cabeçalho da tabela */
+.django-tables2 thead tr {
+    background-color: #009879;
+    color: #ffffff;
+    text-align: left;
+}
+
+/* Estilo para cabeçalhos e células */
+.django-tables2 th,
+.django-tables2 td {
+    padding: 12px 15px;
+    border: 1px solid #dddddd;
+}
+
+/* Estilo "zebrado" para as linhas do corpo da tabela */
+.django-tables2 tbody tr.even {
+    background-color: #f3f3f3;
+}
+
+/* Efeito ao passar o mouse sobre as linhas */
+.django-tables2 tbody tr:hover {
+    background-color: #f1f1f1;
+    cursor: pointer;
+}
+
+/* Estilo para a coluna ordenada (seta) */
+.django-tables2 th.orderable a {
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.django-tables2 th.orderable.asc::after {
+    content: " ▲";
+}
+
+.django-tables2 th.orderable.desc::after {
+    content: " ▼";
 }
