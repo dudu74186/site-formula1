@@ -1,0 +1,7 @@
+{% if record.headshot_url %}
+    <a href="{{ record.headshot_url }}" target="_blank">
+        <img src="{{ record.headshot_url }}" alt="Imagem" style="width: 50px; height: auto;">
+    </a>
+{% else %}
+    -
+{% endif %}

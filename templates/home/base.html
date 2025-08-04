@@ -6,6 +6,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.3.2/css/dataTables.bootstrap5.css">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <title>
         {% block janela %}
@@ -31,15 +33,23 @@
     </header>
     
     {% block body %}
-        <h1 class="titulo"> 
-                Estatísticas da Fórmula 1
-        </h1>
-        <p class="paragrafo">
-                Bem-vindo ao site de estatísticas da Fórmula 1. Aqui você encontrará informações sobre corridas, pilotos e equipes.
-        </p>
-
-        {% render_table object_list %}
-
+    <div class="estruct">
+            <h1 class="titulo"> 
+                    Estatísticas da Fórmula 1
+            </h1>
+            <p class="paragrafo">
+                    Bem-vindo ao site de estatísticas da Fórmula 1. Aqui você encontrará informações sobre corridas, pilotos e equipes.
+            </p>
+        <div class="aside">
+            <h1>Classificação</h1>
+            <div class="container"> 
+                {% render_table table %}
+            </div>
+        </div>
+            
+    </div>
     {% endblock body %}
+
+    
 </body>
 </html>
