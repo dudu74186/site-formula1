@@ -4,7 +4,7 @@ from .models import sessions,driver
 class SessionsTable(tables.Table):
     class Meta:
         model = sessions
-        template_name = 'django_tables2/bootstrap5.html' # Corrigido para o template de tabela
+        template_name = 'django_tables2/bootstrap5.html' 
         attrs = {"class": "table table-dark"} # Adicionando classes do Bootstrap
 
 class DriversTable(tables.Table):
@@ -17,6 +17,6 @@ class DriversTable(tables.Table):
 
     class Meta:
         model = driver
-        template_name = 'django_tables2/bootstrap5.html' # Corrigido para o template de tabela
+        template_name = 'django_tables2/bootstrap5.html' 
         attrs = {"class": "table table-dark"} # Adicionando classes do Bootstrap
         fields = ('broadcast_name', 'driver_number') 
