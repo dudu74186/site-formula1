@@ -792,3 +792,6 @@ class sessions_tyre_manufacturers(models.Model):
 
     class Meta:
         verbose_name = 'Sessions Tyre Manufacturers'
+
+
+#commit
