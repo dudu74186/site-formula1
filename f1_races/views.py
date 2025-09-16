@@ -6,7 +6,7 @@ from django.views.generic import ListView
 from django_tables2 import RequestConfig
 from datetime import date
 
-# Create your views here.
+# Criar context para renderizar a classificação dos pilotos
 def redirecionamento(request):
     return render(request, 'redir/home.html')
 
