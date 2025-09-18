@@ -1,7 +1,7 @@
 from django.db import models
 
 #-----------------------------------------------------------------------Tabelas Mães-------------------------------------------------------------------------------------
-#Lembra de verificar quais campos podem ser ou vazios ou Blanks
+
 
 class sessions(models.Model):
     year = models.IntegerField(primary_key=True)
@@ -234,39 +234,46 @@ class races(models.Model):
 
 #-----------------------------------------------------------------------Tabelas Filhas---------------------------------------------------------------------------------------------
 
+
 class constructors_chronology(models.Model):
-    parentConstructorID = models.ForeignKey(constructors,related_name= 'parentConstructorID' ,on_delete=models.CASCADE)
-    positionDisplayOrder = models.IntegerField()
-    constructorID = models.ForeignKey(constructors,related_name= 'constructorID' ,on_delete=models.CASCADE)
-    yearFrom = models.IntegerField()
-    yearTo = models.IntegerField()
+    parentConstructorID = models.ForeignKey(constructors, related_name='parentConstructorID', on_delete=models.CASCADE, null=True, blank=True)
+    positionDisplayOrder = models.IntegerField(null=True, blank=True)
+    constructorID = models.ForeignKey(constructors, related_name='constructorID', on_delete=models.CASCADE)
+    yearFrom = models.IntegerField(null=True, blank=True)
+    yearTo = models.IntegerField(null=True, blank=True)
 
     class Meta:
         verbose_name = 'Constructors Chronology'
 
+# ---
+
 class drivers_family_relations(models.Model):
-    parentDriverID = models.ForeignKey(drivers, related_name='parentDriverID', on_delete=models.CASCADE)
-    positionDisplayOrder = models.IntegerField()
+    parentDriverID = models.ForeignKey(drivers, related_name='parentDriverID', on_delete=models.CASCADE, null=True, blank=True)
+    positionDisplayOrder = models.IntegerField(null=True, blank=True)
     driverID = models.ForeignKey(drivers, related_name='driverID', on_delete=models.CASCADE)
-    type = models.CharField(max_length=50)
+    type = models.CharField(max_length=50, blank=True)
 
     class Meta:
         verbose_name = 'Drivers Family Relations'
 
+# ---
+
 class races_constructors(models.Model):
     raceID = models.ForeignKey(races, related_name='races_constructors', on_delete=models.CASCADE)
     year = models.ForeignKey(sessions, related_name='year_races_constructors', on_delete=models.CASCADE)
-    round = models.IntegerField()
-    positionDisplayOrder = models.IntegerField()
-    positionNumber = models.IntegerField()
+    round = models.IntegerField(null=True, blank=True)
+    positionDisplayOrder = models.IntegerField(null=True, blank=True)
+    positionNumber = models.IntegerField(null=True, blank=True)
     positionText = models.CharField(max_length=100)
-    constructorID = models.ForeignKey(constructors, related_name='races_constructors_constructorID', on_delete=models.CASCADE)
-    engineManufacturerID = models.ForeignKey(enginesManufacturers, related_name='races_constructors_engineManufacturerID', on_delete=models.CASCADE)
-    points = models.IntegerField()
-    positionsGained = models.IntegerField()
+    constructorID = models.ForeignKey(constructors, related_name='races_constructors_constructorID', on_delete=models.CASCADE, null=True, blank=True)
+    engineManufacturerID = models.ForeignKey(enginesManufacturers, related_name='races_constructors_engineManufacturerID', on_delete=models.CASCADE, null=True, blank=True)
+    points = models.FloatField(null=True, blank=True)
+    positionsGained = models.FloatField(null=True, blank=True)
 
     class Meta:
         verbose_name = 'Races Constructors'
+
+# ---
 
 class races_constructors_standings(models.Model):
     raceID = models.ForeignKey(races, related_name='races_constructors_standings', on_delete=models.CASCADE)
@@ -275,39 +282,47 @@ class races_constructors_standings(models.Model):
     positionDisplayOrder = models.IntegerField()
     positionNumber = models.IntegerField()
     positionText = models.CharField(max_length=100)
-    constructorID = models.ForeignKey(constructors, related_name='races_constructors_standings_constructorID', on_delete=models.CASCADE)
-    engineManufacturerID = models.ForeignKey(enginesManufacturers, related_name='races_constructors_standings_engineManufacturerID', on_delete=models.CASCADE)
-    points = models.FloatField()
-    positionsGained = models.IntegerField()
+    constructorID = models.ForeignKey(constructors, related_name='races_constructors_standings_constructorID', on_delete=models.CASCADE, null=True, blank=True)
+    engineManufacturerID = models.ForeignKey(enginesManufacturers, related_name='races_constructors_standings_engineManufacturerID', on_delete=models.CASCADE, null=True, blank=True)
+    points = models.FloatField(null=True, blank=True)
+    positionsGained = models.IntegerField(null=True, blank=True)
+
+# ---
 
 class races_driver_of_the_day_results(models.Model):
-    raceID = models.ForeignKey(races, related_name='races_driver_of_the_day_results', on_delete=models.CASCADE)
-    year = models.ForeignKey(sessions, related_name='year_races_driver_of_the_day_results', on_delete=models.CASCADE)
-    round = models.IntegerField()
-    positionDisplayOrder = models.IntegerField()
-    positionNumber = models.IntegerField()
-    positionText = models.CharField(max_length=100)
-    constructorID = models.ForeignKey(constructors, related_name='races_driver_of_the_day_results_constructorID', on_delete=models.CASCADE)
-    engineManufacturerID = models.ForeignKey(enginesManufacturers, related_name='races_driver_of_the_day_results_engineManufacturerID', on_delete=models.CASCADE)
-    points = models.FloatField()
-    positionsGained = models.FloatField()
+    raceID = models.ForeignKey(races, related_name='races_driver_of_the_day_results', on_delete=models.CASCADE, null=True, blank=True)
+    year = models.ForeignKey(sessions, related_name='year_races_driver_of_the_day_results', on_delete=models.CASCADE, null=True, blank=True)
+    round = models.IntegerField(null=True, blank=True)
+    positionDisplayOrder = models.IntegerField(null=True, blank=True)
+    positionNumber = models.IntegerField(null=True, blank=True)
+    positionText = models.CharField(max_length=100, blank=True)
+    driverNumber = models.IntegerField(null=True, blank=True)
+    driverID = models.ForeignKey(drivers, related_name='races_driver_of_the_day_results_driverID', on_delete=models.CASCADE, null=True, blank=True)
+    constructorID = models.ForeignKey(constructors, related_name='races_driver_of_the_day_results_constructorID', on_delete=models.CASCADE, null=True, blank=True)
+    engineManufacturerID = models.ForeignKey(enginesManufacturers, related_name='races_driver_of_the_day_results_engineManufacturerID', on_delete=models.CASCADE, null=True, blank=True)
+    tyreManufacturerID = models.ForeignKey(tyreManufacturers, related_name='races_driver_of_the_day_results_tyreManufacturerID', on_delete=models.CASCADE, null=True, blank=True)
+    percentage = models.FloatField(null=True, blank=True)
 
     class Meta:
         verbose_name = 'Races Driver of the Day Results'
 
+# ---
+
 class races_driver_standings(models.Model):
-    raceID = models.ForeignKey(races, related_name='races_driver_standings', on_delete=models.CASCADE)
-    year = models.ForeignKey(sessions, related_name='year_races_driver_standings', on_delete=models.CASCADE)
-    round = models.IntegerField()
-    positionDisplayOrder = models.IntegerField()
-    positionNumber = models.IntegerField()
+    raceID = models.ForeignKey(races, related_name='races_driver_standings', on_delete=models.CASCADE, null=True, blank=True)
+    year = models.ForeignKey(sessions, related_name='year_races_driver_standings', on_delete=models.CASCADE, null=True, blank=True)
+    round = models.IntegerField(null=True, blank=True)
+    positionDisplayOrder = models.IntegerField(null=True, blank=True)
+    positionNumber = models.IntegerField(null=True, blank=True)
     positionText = models.CharField(max_length=100)
-    driverID = models.ForeignKey(drivers, related_name='races_driver_standings_driverID', on_delete=models.CASCADE)
-    points = models.FloatField()
-    positionsGained = models.IntegerField()
+    driverID = models.ForeignKey(drivers, related_name='races_driver_standings_driverID', on_delete=models.CASCADE, null=True, blank=True)
+    points = models.FloatField(null=True, blank=True)
+    positionsGained = models.IntegerField(null=True, blank=True)
 
     class Meta:
         verbose_name = 'Races Driver Standings'
+
+# ---
 
 class races_fastest_laps(models.Model):
     raceID = models.ForeignKey(races, related_name='races_fastest_laps', on_delete=models.CASCADE)
@@ -316,14 +331,14 @@ class races_fastest_laps(models.Model):
     positionDisplayOrder = models.IntegerField()
     positionNumber = models.IntegerField()
     positionText = models.CharField(max_length=100)
-    driverNumber = models.IntegerField()
-    driverID = models.ForeignKey(drivers, related_name='races_fastest_laps_driverID', on_delete=models.CASCADE)
-    constructorsID = models.ForeignKey(constructors, related_name='races_fastest_laps_constructorsID', on_delete=models.CASCADE)
-    engineManufacturerID = models.ForeignKey(enginesManufacturers, related_name='races_fastest_laps_engineManufacturerID', on_delete=models.CASCADE)
-    tyreManufacturersID = models.ForeignKey(tyreManufacturers, related_name='races_fastest_laps_tyresManufacturerID', on_delete=models.CASCADE)
-    lap = models.IntegerField()
-    time = models.DurationField()
-    timeMillis = models.IntegerField()
+    driverNumber = models.IntegerField(null=True, blank=True)
+    driverID = models.ForeignKey(drivers, related_name='races_fastest_laps_driverID', on_delete=models.CASCADE, null=True, blank=True)
+    constructorsID = models.ForeignKey(constructors, related_name='races_fastest_laps_constructorsID', on_delete=models.CASCADE, null=True, blank=True)
+    engineManufacturerID = models.ForeignKey(enginesManufacturers, related_name='races_fastest_laps_engineManufacturerID', on_delete=models.CASCADE, null=True, blank=True)
+    tyreManufacturersID = models.ForeignKey(tyreManufacturers, related_name='races_fastest_laps_tyresManufacturerID', on_delete=models.CASCADE, null=True, blank=True)
+    lap = models.IntegerField(null=True, blank=True)
+    time = models.DurationField(null=True, blank=True)
+    timeMillis = models.IntegerField(null=True, blank=True)
     gap = models.DurationField(null=True, blank=True)
     gapMillis = models.IntegerField(null=True, blank=True)
     interval = models.DurationField(null=True, blank=True)
@@ -332,6 +347,8 @@ class races_fastest_laps(models.Model):
     class Meta:
         verbose_name = 'Races Fastest Laps'
 
+# ---
+
 class races_free_practice1_results(models.Model):
     raceID = models.ForeignKey(races, related_name='races_free_practice1_results', on_delete=models.CASCADE)
     year = models.ForeignKey(sessions, related_name='year_races_free_practice1_results', on_delete=models.CASCADE)
@@ -339,21 +356,23 @@ class races_free_practice1_results(models.Model):
     positionDisplayOrder = models.IntegerField()
     positionNumber = models.IntegerField()
     positionText = models.CharField(max_length=100)
-    driverNumber = models.IntegerField()
-    driverID = models.ForeignKey(drivers, related_name='races_free_practice1_results_driverID', on_delete=models.CASCADE)
-    constructorsID = models.ForeignKey(constructors, related_name='races_free_practice1_results_constructorsID', on_delete=models.CASCADE)
-    engineManufacturerID = models.ForeignKey(enginesManufacturers, related_name='races_free_practice1_results_engineManufacturerID', on_delete=models.CASCADE)
-    tyreManufacturersID = models.ForeignKey(tyreManufacturers, related_name='races_free_practice1_results_tyresManufacturerID', on_delete=models.CASCADE)
-    time = models.DurationField()
-    timeMillis = models.IntegerField()
+    driverNumber = models.IntegerField(null=True, blank=True)
+    driverID = models.ForeignKey(drivers, related_name='races_free_practice1_results_driverID', on_delete=models.CASCADE, null=True, blank=True)
+    constructorsID = models.ForeignKey(constructors, related_name='races_free_practice1_results_constructorsID', on_delete=models.CASCADE, null=True, blank=True)
+    engineManufacturerID = models.ForeignKey(enginesManufacturers, related_name='races_free_practice1_results_engineManufacturerID', on_delete=models.CASCADE, null=True, blank=True)
+    tyreManufacturersID = models.ForeignKey(tyreManufacturers, related_name='races_free_practice1_results_tyresManufacturerID', on_delete=models.CASCADE, null=True, blank=True)
+    time = models.DurationField(null=True, blank=True)
+    timeMillis = models.IntegerField(null=True, blank=True)
     gap = models.DurationField(null=True, blank=True)
     gapMillis = models.IntegerField(null=True, blank=True)
     interval = models.DurationField(null=True, blank=True)
     intervalMillis = models.IntegerField(null=True, blank=True)
-    laps = models.IntegerField()
+    laps = models.IntegerField(null=True, blank=True)
 
     class Meta:
         verbose_name = 'Races Free Practice 1 Results'
+
+# ---
 
 class races_free_practice2_results(models.Model):
     raceID = models.ForeignKey(races, related_name='races_free_practice2_results', on_delete=models.CASCADE)
@@ -362,21 +381,23 @@ class races_free_practice2_results(models.Model):
     positionDisplayOrder = models.IntegerField()
     positionNumber = models.IntegerField()
     positionText = models.CharField(max_length=100)
-    driverNumber = models.IntegerField()
-    driverID = models.ForeignKey(drivers, related_name='races_free_practice2_results_driverID', on_delete=models.CASCADE)
-    constructorsID = models.ForeignKey(constructors, related_name='races_free_practice2_results_constructorsID', on_delete=models.CASCADE)
-    engineManufacturerID = models.ForeignKey(enginesManufacturers, related_name='races_free_practice2_results_engineManufacturerID', on_delete=models.CASCADE)
-    tyreManufacturersID = models.ForeignKey(tyreManufacturers, related_name='races_free_practice2_results_tyresManufacturerID', on_delete=models.CASCADE)
-    time = models.DurationField()
-    timeMillis = models.IntegerField()
+    driverNumber = models.IntegerField(null=True, blank=True)
+    driverID = models.ForeignKey(drivers, related_name='races_free_practice2_results_driverID', on_delete=models.CASCADE, null=True, blank=True)
+    constructorsID = models.ForeignKey(constructors, related_name='races_free_practice2_results_constructorsID', on_delete=models.CASCADE, null=True, blank=True)
+    engineManufacturerID = models.ForeignKey(enginesManufacturers, related_name='races_free_practice2_results_engineManufacturerID', on_delete=models.CASCADE, null=True, blank=True)
+    tyreManufacturersID = models.ForeignKey(tyreManufacturers, related_name='races_free_practice2_results_tyresManufacturerID', on_delete=models.CASCADE, null=True, blank=True)
+    time = models.DurationField(null=True, blank=True)
+    timeMillis = models.IntegerField(null=True, blank=True)
     gap = models.DurationField(null=True, blank=True)
     gapMillis = models.IntegerField(null=True, blank=True)
     interval = models.DurationField(null=True, blank=True)
     intervalMillis = models.IntegerField(null=True, blank=True)
-    laps = models.IntegerField()
+    laps = models.IntegerField(null=True, blank=True)
 
     class Meta:
         verbose_name = 'Races Free Practice 2 Results'
+
+# ---
 
 class races_free_practice3_results(models.Model):
     raceID = models.ForeignKey(races, related_name='races_free_practice3_results', on_delete=models.CASCADE)
@@ -385,21 +406,23 @@ class races_free_practice3_results(models.Model):
     positionDisplayOrder = models.IntegerField()
     positionNumber = models.IntegerField()
     positionText = models.CharField(max_length=100)
-    driverNumber = models.IntegerField()
-    driverID = models.ForeignKey(drivers, related_name='races_free_practice3_results_driverID', on_delete=models.CASCADE)
-    constructorsID = models.ForeignKey(constructors, related_name='races_free_practice3_results_constructorsID', on_delete=models.CASCADE)
-    engineManufacturerID = models.ForeignKey(enginesManufacturers, related_name='races_free_practice3_results_engineManufacturerID', on_delete=models.CASCADE)
-    tyreManufacturersID = models.ForeignKey(tyreManufacturers, related_name='races_free_practice3_results_tyresManufacturerID', on_delete=models.CASCADE)
-    time = models.DurationField()
-    timeMillis = models.IntegerField()
+    driverNumber = models.IntegerField(null=True, blank=True)
+    driverID = models.ForeignKey(drivers, related_name='races_free_practice3_results_driverID', on_delete=models.CASCADE, null=True, blank=True)
+    constructorsID = models.ForeignKey(constructors, related_name='races_free_practice3_results_constructorsID', on_delete=models.CASCADE, null=True, blank=True)
+    engineManufacturerID = models.ForeignKey(enginesManufacturers, related_name='races_free_practice3_results_engineManufacturerID', on_delete=models.CASCADE, null=True, blank=True)
+    tyreManufacturersID = models.ForeignKey(tyreManufacturers, related_name='races_free_practice3_results_tyresManufacturerID', on_delete=models.CASCADE, null=True, blank=True)
+    time = models.DurationField(null=True, blank=True)
+    timeMillis = models.IntegerField(null=True, blank=True)
     gap = models.DurationField(null=True, blank=True)
     gapMillis = models.IntegerField(null=True, blank=True)
     interval = models.DurationField(null=True, blank=True)
     intervalMillis = models.IntegerField(null=True, blank=True)
-    laps = models.IntegerField()
+    laps = models.IntegerField(null=True, blank=True)
 
     class Meta:
         verbose_name = 'Races Free Practice 3 Results'
+
+# ---
 
 class races_free_practice4_results(models.Model):
     raceID = models.ForeignKey(races, related_name='races_free_practice4_results', on_delete=models.CASCADE)
@@ -408,21 +431,23 @@ class races_free_practice4_results(models.Model):
     positionDisplayOrder = models.IntegerField()
     positionNumber = models.IntegerField()
     positionText = models.CharField(max_length=100)
-    driverNumber = models.IntegerField()
-    driverID = models.ForeignKey(drivers, related_name='races_free_practice4_results_driverID', on_delete=models.CASCADE)
-    constructorsID = models.ForeignKey(constructors, related_name='races_free_practice4_results_constructorsID', on_delete=models.CASCADE)
-    engineManufacturerID = models.ForeignKey(enginesManufacturers, related_name='races_free_practice4_results_engineManufacturerID', on_delete=models.CASCADE)
-    tyreManufacturersID = models.ForeignKey(tyreManufacturers, related_name='races_free_practice4_results_tyresManufacturerID', on_delete=models.CASCADE)
-    time = models.DurationField()
-    timeMillis = models.IntegerField()
+    driverNumber = models.IntegerField(null=True, blank=True)
+    driverID = models.ForeignKey(drivers, related_name='races_free_practice4_results_driverID', on_delete=models.CASCADE, null=True, blank=True)
+    constructorsID = models.ForeignKey(constructors, related_name='races_free_practice4_results_constructorsID', on_delete=models.CASCADE, null=True, blank=True)
+    engineManufacturerID = models.ForeignKey(enginesManufacturers, related_name='races_free_practice4_results_engineManufacturerID', on_delete=models.CASCADE, null=True, blank=True)
+    tyreManufacturersID = models.ForeignKey(tyreManufacturers, related_name='races_free_practice4_results_tyresManufacturerID', on_delete=models.CASCADE, null=True, blank=True)
+    time = models.DurationField(null=True, blank=True)
+    timeMillis = models.IntegerField(null=True, blank=True)
     gap = models.DurationField(null=True, blank=True)
     gapMillis = models.IntegerField(null=True, blank=True)
     interval = models.DurationField(null=True, blank=True)
     intervalMillis = models.IntegerField(null=True, blank=True)
-    laps = models.IntegerField()
+    laps = models.IntegerField(null=True, blank=True)
 
     class Meta:
         verbose_name = 'Races Free Practice 4 Results'
+
+# ---
 
 class races_pit_stops(models.Model):
     raceID = models.ForeignKey(races, related_name='races_pit_stops', on_delete=models.CASCADE)
@@ -431,33 +456,35 @@ class races_pit_stops(models.Model):
     positionDisplayOrder = models.IntegerField()
     positionNumber = models.IntegerField()
     positionText = models.CharField(max_length=100)
-    driverNumber = models.IntegerField()
-    driverID = models.ForeignKey(drivers, related_name='races_pit_stops_driverID', on_delete=models.CASCADE)
-    constructorsID = models.ForeignKey(constructors, related_name='races_pit_stops_constructorsID', on_delete=models.CASCADE)
-    engineManufacturerID = models.ForeignKey(enginesManufacturers, related_name='races_pit_stops_engineManufacturerID', on_delete=models.CASCADE)
-    tyreManufacturersID = models.ForeignKey(tyreManufacturers, related_name='races_pit_stops_tyresManufacturerID', on_delete=models.CASCADE)
+    driverNumber = models.IntegerField(null=True, blank=True)
+    driverID = models.ForeignKey(drivers, related_name='races_pit_stops_driverID', on_delete=models.CASCADE, null=True, blank=True)
+    constructorsID = models.ForeignKey(constructors, related_name='races_pit_stops_constructorsID', on_delete=models.CASCADE, null=True, blank=True)
+    engineManufacturerID = models.ForeignKey(enginesManufacturers, related_name='races_pit_stops_engineManufacturerID', on_delete=models.CASCADE, null=True, blank=True)
+    tyreManufacturersID = models.ForeignKey(tyreManufacturers, related_name='races_pit_stops_tyresManufacturerID', on_delete=models.CASCADE, null=True, blank=True)
     stop = models.IntegerField()
     lap = models.IntegerField()
-    time = models.DurationField()
-    timeMillis = models.IntegerField()
+    time = models.DurationField(null=True, blank=True)
+    timeMillis = models.IntegerField(null=True, blank=True)
 
     class Meta:
         verbose_name = 'Races Pit Stops'
+
+# ---
 
 class races_pre_qualifying_results(models.Model):
     raceID = models.ForeignKey(races, related_name='races_pre_qualifying_results', on_delete=models.CASCADE)
     year = models.ForeignKey(sessions, related_name='year_races_pre_qualifying_results', on_delete=models.CASCADE)
     round = models.IntegerField()
-    positionDisplayOrder = models.IntegerField()
-    positionNumber = models.IntegerField()
+    positionDisplayOrder = models.IntegerField(null=True, blank=True)
+    positionNumber = models.IntegerField(null=True, blank=True)
     positionText = models.CharField(max_length=100)
-    driverNumber = models.IntegerField()
-    driverID = models.ForeignKey(drivers, related_name='races_pre_qualifying_results_driverID', on_delete=models.CASCADE)
-    constructorsID = models.ForeignKey(constructors, related_name='races_pre_qualifying_results_constructorsID', on_delete=models.CASCADE)
-    engineManufacturerID = models.ForeignKey(enginesManufacturers, related_name='races_pre_qualifying_results_engineManufacturerID', on_delete=models.CASCADE)
-    tyreManufacturersID = models.ForeignKey(tyreManufacturers, related_name='races_pre_qualifying_results_tyresManufacturerID', on_delete=models.CASCADE)
-    time = models.DurationField()
-    timeMillis = models.IntegerField()
+    driverNumber = models.IntegerField(null=True, blank=True)
+    driverID = models.ForeignKey(drivers, related_name='races_pre_qualifying_results_driverID', on_delete=models.CASCADE, null=True, blank=True)
+    constructorsID = models.ForeignKey(constructors, related_name='races_pre_qualifying_results_constructorsID', on_delete=models.CASCADE, null=True, blank=True)
+    engineManufacturerID = models.ForeignKey(enginesManufacturers, related_name='races_pre_qualifying_results_engineManufacturerID', on_delete=models.CASCADE, null=True, blank=True)
+    tyreManufacturersID = models.ForeignKey(tyreManufacturers, related_name='races_pre_qualifying_results_tyresManufacturerID', on_delete=models.CASCADE, null=True, blank=True)
+    time = models.DurationField(null=True, blank=True)
+    timeMillis = models.IntegerField(null=True, blank=True)
     q1 = models.DurationField(null=True, blank=True)
     q1Millis = models.IntegerField(null=True, blank=True)
     q2 = models.DurationField(null=True, blank=True)
@@ -468,10 +495,12 @@ class races_pre_qualifying_results(models.Model):
     gapMillis = models.IntegerField(null=True, blank=True)
     interval = models.DurationField(null=True, blank=True)
     intervalMillis = models.IntegerField(null=True, blank=True)
-    laps = models.IntegerField()
+    laps = models.IntegerField(null=True, blank=True)
 
     class Meta:
         verbose_name = 'Races Pre Qualifying Results'
+
+# ---
 
 class races_qualifying1_results(models.Model):
     raceID = models.ForeignKey(races, related_name='races_qualifying1_results', on_delete=models.CASCADE)
@@ -480,13 +509,13 @@ class races_qualifying1_results(models.Model):
     positionDisplayOrder = models.IntegerField()
     positionNumber = models.IntegerField()
     positionText = models.CharField(max_length=100)
-    driverNumber = models.IntegerField()
-    driverID = models.ForeignKey(drivers, related_name='races_qualifying1_results_driverID', on_delete=models.CASCADE)
-    constructorsID = models.ForeignKey(constructors, related_name='races_qualifying1_results_constructorsID', on_delete=models.CASCADE)
-    engineManufacturerID = models.ForeignKey(enginesManufacturers, related_name='races_qualifying1_results_engineManufacturerID', on_delete=models.CASCADE)
-    tyreManufacturersID = models.ForeignKey(tyreManufacturers, related_name='races_qualifying1_results_tyresManufacturerID', on_delete=models.CASCADE)
-    time = models.DurationField()
-    timeMillis = models.IntegerField()
+    driverNumber = models.IntegerField(null=True, blank=True)
+    driverID = models.ForeignKey(drivers, related_name='races_qualifying1_results_driverID', on_delete=models.CASCADE, null=True, blank=True)
+    constructorsID = models.ForeignKey(constructors, related_name='races_qualifying1_results_constructorsID', on_delete=models.CASCADE, null=True, blank=True)
+    engineManufacturerID = models.ForeignKey(enginesManufacturers, related_name='races_qualifying1_results_engineManufacturerID', on_delete=models.CASCADE, null=True, blank=True)
+    tyreManufacturersID = models.ForeignKey(tyreManufacturers, related_name='races_qualifying1_results_tyresManufacturerID', on_delete=models.CASCADE, null=True, blank=True)
+    time = models.DurationField(null=True, blank=True)
+    timeMillis = models.IntegerField(null=True, blank=True)
     q1 = models.DurationField(null=True, blank=True)
     q1Millis = models.IntegerField(null=True, blank=True)
     q2 = models.DurationField(null=True, blank=True)
@@ -497,25 +526,27 @@ class races_qualifying1_results(models.Model):
     gapMillis = models.IntegerField(null=True, blank=True)
     interval = models.DurationField(null=True, blank=True)
     intervalMillis = models.IntegerField(null=True, blank=True)
-    laps = models.IntegerField()
+    laps = models.IntegerField(null=True, blank=True)
 
     class Meta:
         verbose_name = 'Races Qualifying 1 Results'
+
+# ---
 
 class races_qualifying2_results(models.Model):
     raceID = models.ForeignKey(races, related_name='races_qualifying2_results', on_delete=models.CASCADE)
     year = models.ForeignKey(sessions, related_name='year_races_qualifying2_results', on_delete=models.CASCADE)
     round = models.IntegerField()
     positionDisplayOrder = models.IntegerField()
-    positionNumber = models.IntegerField()
+    positionNumber = models.IntegerField(null=True, blank=True)
     positionText = models.CharField(max_length=100)
-    driverNumber = models.IntegerField()
-    driverID = models.ForeignKey(drivers, related_name='races_qualifying2_results_driverID', on_delete=models.CASCADE)
-    constructorsID = models.ForeignKey(constructors, related_name='races_qualifying2_results_constructorsID', on_delete=models.CASCADE)
-    engineManufacturerID = models.ForeignKey(enginesManufacturers, related_name='races_qualifying2_results_engineManufacturerID', on_delete=models.CASCADE)
-    tyreManufacturersID = models.ForeignKey(tyreManufacturers, related_name='races_qualifying2_results_tyresManufacturerID', on_delete=models.CASCADE)
-    time = models.DurationField()
-    timeMillis = models.IntegerField()
+    driverNumber = models.IntegerField(null=True, blank=True)
+    driverID = models.ForeignKey(drivers, related_name='races_qualifying2_results_driverID', on_delete=models.CASCADE, null=True, blank=True)
+    constructorsID = models.ForeignKey(constructors, related_name='races_qualifying2_results_constructorsID', on_delete=models.CASCADE, null=True, blank=True)
+    engineManufacturerID = models.ForeignKey(enginesManufacturers, related_name='races_qualifying2_results_engineManufacturerID', on_delete=models.CASCADE, null=True, blank=True)
+    tyreManufacturersID = models.ForeignKey(tyreManufacturers, related_name='races_qualifying2_results_tyresManufacturerID', on_delete=models.CASCADE, null=True, blank=True)
+    time = models.DurationField(null=True, blank=True)
+    timeMillis = models.IntegerField(null=True, blank=True)
     q1 = models.DurationField(null=True, blank=True)
     q1Millis = models.IntegerField(null=True, blank=True)
     q2 = models.DurationField(null=True, blank=True)
@@ -526,25 +557,27 @@ class races_qualifying2_results(models.Model):
     gapMillis = models.IntegerField(null=True, blank=True)
     interval = models.DurationField(null=True, blank=True)
     intervalMillis = models.IntegerField(null=True, blank=True)
-    laps = models.IntegerField()
+    laps = models.IntegerField(null=True, blank=True)
 
     class Meta:
         verbose_name = 'Races Qualifying 2 Results'
+
+# ---
 
 class races_qualifying_results(models.Model):
     raceID = models.ForeignKey(races, related_name='races_qualifying_results', on_delete=models.CASCADE)
     year = models.ForeignKey(sessions, related_name='year_races_qualifying_results', on_delete=models.CASCADE)
     round = models.IntegerField()
     positionDisplayOrder = models.IntegerField()
-    positionNumber = models.IntegerField()
+    positionNumber = models.IntegerField(null=True, blank=True)
     positionText = models.CharField(max_length=100)
-    driverNumber = models.IntegerField()
-    driverID = models.ForeignKey(drivers, related_name='races_qualifying_results_driverID', on_delete=models.CASCADE)
-    constructorsID = models.ForeignKey(constructors, related_name='races_qualifying_results_constructorsID', on_delete=models.CASCADE)
-    engineManufacturerID = models.ForeignKey(enginesManufacturers, related_name='races_qualifying_results_engineManufacturerID', on_delete=models.CASCADE)
-    tyreManufacturersID = models.ForeignKey(tyreManufacturers, related_name='races_qualifying_results_tyresManufacturerID', on_delete=models.CASCADE)
-    time = models.DurationField()
-    timeMillis = models.IntegerField()
+    driverNumber = models.IntegerField(null=True, blank=True)
+    driverID = models.ForeignKey(drivers, related_name='races_qualifying_results_driverID', on_delete=models.CASCADE, null=True, blank=True)
+    constructorsID = models.ForeignKey(constructors, related_name='races_qualifying_results_constructorsID', on_delete=models.CASCADE, null=True, blank=True)
+    engineManufacturerID = models.ForeignKey(enginesManufacturers, related_name='races_qualifying_results_engineManufacturerID', on_delete=models.CASCADE, null=True, blank=True)
+    tyreManufacturersID = models.ForeignKey(tyreManufacturers, related_name='races_qualifying_results_tyresManufacturerID', on_delete=models.CASCADE, null=True, blank=True)
+    time = models.DurationField(null=True, blank=True)
+    timeMillis = models.IntegerField(null=True, blank=True)
     q1 = models.DurationField(null=True, blank=True)
     q1Millis = models.IntegerField(null=True, blank=True)
     q2 = models.DurationField(null=True, blank=True)
@@ -555,27 +588,29 @@ class races_qualifying_results(models.Model):
     gapMillis = models.IntegerField(null=True, blank=True)
     interval = models.DurationField(null=True, blank=True)
     intervalMillis = models.IntegerField(null=True, blank=True)
-    laps = models.IntegerField()
+    laps = models.IntegerField(null=True, blank=True)
 
     class Meta:
         verbose_name = 'Races Qualifying Results'
+
+# ---
 
 class races_race_results(models.Model):
     raceID = models.ForeignKey(races, related_name='races_race_results', on_delete=models.CASCADE)
     year = models.ForeignKey(sessions, related_name='year_races_race_results', on_delete=models.CASCADE)
     round = models.IntegerField()
     positionDisplayOrder = models.IntegerField()
-    positionNumber = models.IntegerField()
+    positionNumber = models.IntegerField(null=True, blank=True)
     positionText = models.CharField(max_length=100)
-    driverNumber = models.IntegerField()
-    driverID = models.ForeignKey(drivers, related_name='races_race_results_driverID', on_delete=models.CASCADE)
-    constructorsID = models.ForeignKey(constructors, related_name='races_race_results_constructorsID', on_delete=models.CASCADE)
-    engineManufacturerID = models.ForeignKey(enginesManufacturers, related_name='races_race_results_engineManufacturerID', on_delete=models.CASCADE)
-    tyreManufacturersID = models.ForeignKey(tyreManufacturers, related_name='races_race_results_tyresManufacturerID', on_delete=models.CASCADE)
+    driverNumber = models.IntegerField(null=True, blank=True)
+    driverID = models.ForeignKey(drivers, related_name='races_race_results_driverID', on_delete=models.CASCADE, null=True, blank=True)
+    constructorsID = models.ForeignKey(constructors, related_name='races_race_results_constructorsID', on_delete=models.CASCADE, null=True, blank=True)
+    engineManufacturerID = models.ForeignKey(enginesManufacturers, related_name='races_race_results_engineManufacturerID', on_delete=models.CASCADE, null=True, blank=True)
+    tyreManufacturersID = models.ForeignKey(tyreManufacturers, related_name='races_race_results_tyresManufacturerID', on_delete=models.CASCADE, null=True, blank=True)
     sharedCar = models.BooleanField(default=False)
-    laps = models.IntegerField()
-    time = models.DurationField()
-    timeMillis = models.IntegerField()
+    laps = models.IntegerField(null=True, blank=True)
+    time = models.DurationField(null=True, blank=True)
+    timeMillis = models.IntegerField(null=True, blank=True)
     timePenalty = models.DurationField(null=True, blank=True)
     timePenaltyMillis = models.IntegerField(null=True, blank=True)
     gap = models.DurationField(null=True, blank=True)
@@ -599,20 +634,22 @@ class races_race_results(models.Model):
     class Meta:
         verbose_name = 'Races Race Results'
 
+# ---
+
 class races_sprint_qualifying(models.Model):
     raceID = models.ForeignKey(races, related_name='races_sprint_qualifying', on_delete=models.CASCADE)
     year = models.ForeignKey(sessions, related_name='year_races_sprint_qualifying', on_delete=models.CASCADE)
     round = models.IntegerField()
     positionDisplayOrder = models.IntegerField()
-    positionNumber = models.IntegerField()
+    positionNumber = models.IntegerField(null=True, blank=True)
     positionText = models.CharField(max_length=100)
-    driverNumber = models.IntegerField()
-    driverID = models.ForeignKey(drivers, related_name='races_sprint_qualifying_driverID', on_delete=models.CASCADE)
-    constructorsID = models.ForeignKey(constructors, related_name='races_sprint_qualifying_constructorsID', on_delete=models.CASCADE)
-    engineManufacturerID = models.ForeignKey(enginesManufacturers, related_name='races_sprint_qualifying_engineManufacturerID', on_delete=models.CASCADE)
-    tyreManufacturersID = models.ForeignKey(tyreManufacturers, related_name='races_sprint_qualifying_tyresManufacturerID', on_delete=models.CASCADE)
-    time = models.DurationField()
-    timeMillis = models.IntegerField()
+    driverNumber = models.IntegerField(null=True, blank=True)
+    driverID = models.ForeignKey(drivers, related_name='races_sprint_qualifying_driverID', on_delete=models.CASCADE, null=True, blank=True)
+    constructorsID = models.ForeignKey(constructors, related_name='races_sprint_qualifying_constructorsID', on_delete=models.CASCADE, null=True, blank=True)
+    engineManufacturerID = models.ForeignKey(enginesManufacturers, related_name='races_sprint_qualifying_engineManufacturerID', on_delete=models.CASCADE, null=True, blank=True)
+    tyreManufacturersID = models.ForeignKey(tyreManufacturers, related_name='races_sprint_qualifying_tyresManufacturerID', on_delete=models.CASCADE, null=True, blank=True)
+    time = models.DurationField(null=True, blank=True)
+    timeMillis = models.IntegerField(null=True, blank=True)
     q1 = models.DurationField(null=True, blank=True)
     q1Millis = models.IntegerField(null=True, blank=True)
     q2 = models.DurationField(null=True, blank=True)
@@ -623,49 +660,53 @@ class races_sprint_qualifying(models.Model):
     gapMillis = models.IntegerField(null=True, blank=True)
     interval = models.DurationField(null=True, blank=True)
     intervalMillis = models.IntegerField(null=True, blank=True)
-    laps = models.IntegerField()
+    laps = models.IntegerField(null=True, blank=True)
 
     class Meta:
         verbose_name = 'Races Sprint Qualifying'
+
+# ---
 
 class races_sprint_starting_grid_positions(models.Model):
     raceID = models.ForeignKey(races, related_name='races_sprint_starting_grid_positions', on_delete=models.CASCADE)
     year = models.ForeignKey(sessions, related_name='year_races_sprint_starting_grid_positions', on_delete=models.CASCADE)
     round = models.IntegerField()
     positionDisplayOrder = models.IntegerField()
-    positionNumber = models.IntegerField()
+    positionNumber = models.IntegerField(null=True, blank=True)
     positionText = models.CharField(max_length=100)
-    driverNumber = models.IntegerField()
-    driverID = models.ForeignKey(drivers, related_name='races_sprint_starting_grid_positions_driverID', on_delete=models.CASCADE)
-    constructorsID = models.ForeignKey(constructors, related_name='races_sprint_starting_grid_positions_constructorsID', on_delete=models.CASCADE)
-    engineManufacturerID = models.ForeignKey(enginesManufacturers, related_name='races_sprint_starting_grid_positions_engineManufacturerID', on_delete=models.CASCADE)
-    tyreManufacturersID = models.ForeignKey(tyreManufacturers, related_name='races_sprint_starting_grid_positions_tyresManufacturerID', on_delete=models.CASCADE)
+    driverNumber = models.IntegerField(null=True, blank=True)
+    driverID = models.ForeignKey(drivers, related_name='races_sprint_starting_grid_positions_driverID', on_delete=models.CASCADE, null=True, blank=True)
+    constructorsID = models.ForeignKey(constructors, related_name='races_sprint_starting_grid_positions_constructorsID', on_delete=models.CASCADE, null=True, blank=True)
+    engineManufacturerID = models.ForeignKey(enginesManufacturers, related_name='races_sprint_starting_grid_positions_engineManufacturerID', on_delete=models.CASCADE, null=True, blank=True)
+    tyreManufacturersID = models.ForeignKey(tyreManufacturers, related_name='races_sprint_starting_grid_positions_tyresManufacturerID', on_delete=models.CASCADE, null=True, blank=True)
     qualificationPositionNumber = models.IntegerField(null=True, blank=True)
     qualificationPositionText = models.CharField(max_length=100, null=True, blank=True)
-    gridPenalty = models.IntegerField()
-    gridPenaltyPositions = models.IntegerField()
-    time = models.DurationField()
-    timeMillis = models.IntegerField()
+    gridPenalty = models.IntegerField(null=True, blank=True)
+    gridPenaltyPositions = models.IntegerField(null=True, blank=True)
+    time = models.DurationField(null=True, blank=True)
+    timeMillis = models.IntegerField(null=True, blank=True)
 
     class Meta:
         verbose_name = 'Races Sprint Starting Grid Positions'
+
+# ---
 
 class races_sprint_race_results(models.Model):
     raceID = models.ForeignKey(races, related_name='races_sprint_race_results', on_delete=models.CASCADE)
     year = models.ForeignKey(sessions, related_name='year_races_sprint_race_results', on_delete=models.CASCADE)
     round = models.IntegerField()
     positionDisplayOrder = models.IntegerField()
-    positionNumber = models.IntegerField()
+    positionNumber = models.IntegerField(null=True, blank=True)
     positionText = models.CharField(max_length=100)
-    driverNumber = models.IntegerField()
-    driverID = models.ForeignKey(drivers, related_name='races_sprint_race_results_driverID', on_delete=models.CASCADE)
-    constructorsID = models.ForeignKey(constructors, related_name='races_sprint_race_results_constructorsID', on_delete=models.CASCADE)
-    engineManufacturerID = models.ForeignKey(enginesManufacturers, related_name='races_sprint_race_results_engineManufacturerID', on_delete=models.CASCADE)
-    tyreManufacturersID = models.ForeignKey(tyreManufacturers, related_name='races_sprint_race_results_tyresManufacturerID', on_delete=models.CASCADE)
+    driverNumber = models.IntegerField(null=True, blank=True)
+    driverID = models.ForeignKey(drivers, related_name='races_sprint_race_results_driverID', on_delete=models.CASCADE, null=True, blank=True)
+    constructorsID = models.ForeignKey(constructors, related_name='races_sprint_race_results_constructorsID', on_delete=models.CASCADE, null=True, blank=True)
+    engineManufacturerID = models.ForeignKey(enginesManufacturers, related_name='races_sprint_race_results_engineManufacturerID', on_delete=models.CASCADE, null=True, blank=True)
+    tyreManufacturersID = models.ForeignKey(tyreManufacturers, related_name='races_sprint_race_results_tyresManufacturerID', on_delete=models.CASCADE, null=True, blank=True)
     sharedCar = models.BooleanField(default=False)
-    laps = models.IntegerField()
-    time = models.DurationField()
-    timeMillis = models.IntegerField()
+    laps = models.IntegerField(null=True, blank=True)
+    time = models.DurationField(null=True, blank=True)
+    timeMillis = models.IntegerField(null=True, blank=True)
     timePenalty = models.DurationField(null=True, blank=True)
     timePenaltyMillis = models.IntegerField(null=True, blank=True)
     gap = models.DurationField(null=True, blank=True)
@@ -689,42 +730,46 @@ class races_sprint_race_results(models.Model):
     class Meta:
         verbose_name = 'Races Sprint Race Results'
         
+# ---
+
 class races_starting_grid_positions(models.Model):
     raceID = models.ForeignKey(races, related_name='races_starting_grid_positions', on_delete=models.CASCADE)
     year = models.ForeignKey(sessions, related_name='year_races_starting_grid_positions', on_delete=models.CASCADE)
     round = models.IntegerField()
     positionDisplayOrder = models.IntegerField()
-    positionNumber = models.IntegerField()
+    positionNumber = models.IntegerField(null=True, blank=True)
     positionText = models.CharField(max_length=100)
-    driverNumber = models.IntegerField()
-    driverID = models.ForeignKey(drivers, related_name='races_starting_grid_positions_driverID', on_delete=models.CASCADE)
-    constructorsID = models.ForeignKey(constructors, related_name='races_starting_grid_positions_constructorsID', on_delete=models.CASCADE)
-    engineManufacturerID = models.ForeignKey(enginesManufacturers, related_name='races_starting_grid_positions_engineManufacturerID', on_delete=models.CASCADE)
-    tyreManufacturersID = models.ForeignKey(tyreManufacturers, related_name='races_starting_grid_positions_tyresManufacturerID', on_delete=models.CASCADE)
+    driverNumber = models.IntegerField(null=True, blank=True)
+    driverID = models.ForeignKey(drivers, related_name='races_starting_grid_positions_driverID', on_delete=models.CASCADE, null=True, blank=True)
+    constructorsID = models.ForeignKey(constructors, related_name='races_starting_grid_positions_constructorsID', on_delete=models.CASCADE, null=True, blank=True)
+    engineManufacturerID = models.ForeignKey(enginesManufacturers, related_name='races_starting_grid_positions_engineManufacturerID', on_delete=models.CASCADE, null=True, blank=True)
+    tyreManufacturersID = models.ForeignKey(tyreManufacturers, related_name='races_starting_grid_positions_tyresManufacturerID', on_delete=models.CASCADE, null=True, blank=True)
     qualificationPositionNumber = models.IntegerField(null=True, blank=True)
     qualificationPositionText = models.CharField(max_length=100, null=True, blank=True)
-    gridPenalty = models.IntegerField()
-    gridPenaltyPositions = models.IntegerField()
-    time = models.DurationField()
-    timeMillis = models.IntegerField()
+    gridPenalty = models.IntegerField(null=True, blank=True)
+    gridPenaltyPositions = models.IntegerField(null=True, blank=True)
+    time = models.DurationField(null=True, blank=True)
+    timeMillis = models.IntegerField(null=True, blank=True)
 
     class Meta:
         verbose_name = 'Races Starting Grid Positions'
+
+# ---
 
 class races_warming_up_results(models.Model):
     raceID = models.ForeignKey(races, related_name='races_warming_up_results', on_delete=models.CASCADE)
     year = models.ForeignKey(sessions, related_name='year_races_warming_up_results', on_delete=models.CASCADE)
     round = models.IntegerField()
     positionDisplayOrder = models.IntegerField()
-    positionNumber = models.IntegerField()
+    positionNumber = models.IntegerField(null=True, blank=True)
     positionText = models.CharField(max_length=100)
-    driverNumber = models.IntegerField()
-    driverID = models.ForeignKey(drivers, related_name='races_warming_up_results_driverID', on_delete=models.CASCADE)
-    constructorsID = models.ForeignKey(constructors, related_name='races_warming_up_results_constructorsID', on_delete=models.CASCADE)
-    engineManufacturerID = models.ForeignKey(enginesManufacturers, related_name='races_warming_up_results_engineManufacturerID', on_delete=models.CASCADE)
-    tyreManufacturersID = models.ForeignKey(tyreManufacturers, related_name='races_warming_up_results_tyresManufacturerID', on_delete=models.CASCADE)
-    time = models.DurationField()
-    timeMillis = models.IntegerField()
+    driverNumber = models.IntegerField(null=True, blank=True)
+    driverID = models.ForeignKey(drivers, related_name='races_warming_up_results_driverID', on_delete=models.CASCADE, null=True, blank=True)
+    constructorsID = models.ForeignKey(constructors, related_name='races_warming_up_results_constructorsID', on_delete=models.CASCADE, null=True, blank=True)
+    engineManufacturerID = models.ForeignKey(enginesManufacturers, related_name='races_warming_up_results_engineManufacturerID', on_delete=models.CASCADE, null=True, blank=True)
+    tyreManufacturersID = models.ForeignKey(tyreManufacturers, related_name='races_warming_up_results_tyresManufacturerID', on_delete=models.CASCADE, null=True, blank=True)
+    time = models.DurationField(null=True, blank=True)
+    timeMillis = models.IntegerField(null=True, blank=True)
     timePenalty = models.DurationField(null=True, blank=True)
     timePenaltyMillis = models.IntegerField(null=True, blank=True)
     gap = models.DurationField(null=True, blank=True)
@@ -732,11 +777,12 @@ class races_warming_up_results(models.Model):
     gapLaps = models.IntegerField(null=True, blank=True)
     interval = models.DurationField(null=True, blank=True)
     intervalMillis = models.IntegerField(null=True, blank=True)
-    laps = models.IntegerField()
+    laps = models.IntegerField(null=True, blank=True)
 
     class Meta:
         verbose_name = 'Races Warming Up Results'
 
+# ---
 
 class sessions_entrants_chassis(models.Model):
     year = models.ForeignKey(sessions, related_name='year_sessions_entrants_chassis', on_delete=models.CASCADE)
@@ -748,6 +794,8 @@ class sessions_entrants_chassis(models.Model):
     class Meta:
         verbose_name = 'Sessions Entrants Chassis'
 
+# ---
+
 class sessions_entrants_constructors(models.Model):
     year = models.ForeignKey(sessions, related_name='year_sessions_entrants_constructors', on_delete=models.CASCADE)
     entrantID = models.ForeignKey(entrants, related_name='sessions_entrants_constructors_entrantID', on_delete=models.CASCADE)
@@ -757,18 +805,22 @@ class sessions_entrants_constructors(models.Model):
     class Meta:
         verbose_name = 'Sessions Entrants Constructors'
 
+# ---
+
 class sessions_entrants_drivers(models.Model):
     year = models.ForeignKey(sessions, related_name='year_sessions_entrants_drivers', on_delete=models.CASCADE)
     entrantID = models.ForeignKey(entrants, related_name='sessions_entrants_drivers_entrantID', on_delete=models.CASCADE)
     driverID = models.ForeignKey(drivers, related_name='sessions_entrants_drivers_driverID', on_delete=models.CASCADE)
     constructorID = models.ForeignKey(constructors, related_name='sessions_entrants_drivers_constructorID', on_delete=models.CASCADE)
     enginesManufacturerID = models.ForeignKey(enginesManufacturers, related_name='sessions_entrants_drivers_enginesManufacturerID', on_delete=models.CASCADE)
-    rounds = models.IntegerField()
-    roundsText = models.CharField(max_length=100)
+    rounds = models.IntegerField(null=True, blank=True)
+    roundsText = models.CharField(max_length=100, blank=True)
     testDriver = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = 'Sessions Entrants Drivers'
+
+# ---
 
 class sessions_entrants_engines(models.Model):
     year = models.ForeignKey(sessions, related_name='year_sessions_entrants_engines', on_delete=models.CASCADE)
@@ -778,6 +830,8 @@ class sessions_entrants_engines(models.Model):
 
     class Meta:
         verbose_name = 'Sessions Entrants Engines'
+
+# ---
 
 class sessions_entrants_tyres_manufacturers(models.Model):
     year = models.ForeignKey(sessions, related_name='year_sessions_entrants_tyres_manufacturers', on_delete=models.CASCADE)
@@ -789,102 +843,114 @@ class sessions_entrants_tyres_manufacturers(models.Model):
     class Meta:
         verbose_name = 'Sessions Entrants Tyres Manufacturers'
 
+# ---
+
 class sessions_tyre_manufacturers(models.Model):
     year = models.ForeignKey(sessions, related_name='year_sessions_tyre_manufacturers', on_delete=models.CASCADE)
     tyreManufacturerID = models.ForeignKey(tyreManufacturers, related_name='sessions_tyre_manufacturers_tyresManufacturerID', on_delete=models.CASCADE)
-    bestStartingGridPosition = models.IntegerField()
-    bestRaceResult = models.IntegerField()
-    totalRaceEntries = models.IntegerField()
-    totalRaceWins = models.IntegerField()
-    totalRacesStarts = models.IntegerField()
-    totalRaceLaps = models.IntegerField()
-    totalPodiums = models.IntegerField()
-    totalPodiumRaces = models.IntegerField()
-    totalPolePositions = models.IntegerField()
-    totalFastestLaps = models.IntegerField()
+    bestStartingGridPosition = models.IntegerField(null=True, blank=True)
+    bestRaceResult = models.IntegerField(null=True, blank=True)
+    totalRaceEntries = models.IntegerField(null=True, blank=True)
+    totalRaceWins = models.IntegerField(null=True, blank=True)
+    totalRacesStarts = models.IntegerField(null=True, blank=True)
+    totalRaceLaps = models.IntegerField(null=True, blank=True)
+    totalPodiums = models.IntegerField(null=True, blank=True)
+    totalPodiumRaces = models.IntegerField(null=True, blank=True)
+    totalPolePositions = models.IntegerField(null=True, blank=True)
+    totalFastestLaps = models.IntegerField(null=True, blank=True)
 
     class Meta:
         verbose_name = 'Sessions Tyre Manufacturers'
 
+# ---
+
 class sessions_constructors(models.Model):
     year = models.ForeignKey(sessions, related_name='year_sessions_constructors', on_delete=models.CASCADE)
     constructorID = models.ForeignKey(constructors, related_name='sessions_constructors_constructorID', on_delete=models.CASCADE)
-    positionNumber = models.IntegerField()
-    positionText = models.CharField(max_length=100)
-    bestStartingGridPosition = models.IntegerField()
-    bestRaceResult = models.IntegerField()
-    totalRaceEntries = models.IntegerField()
-    totalRaceWins = models.IntegerField()
-    total1And2Finishes = models.IntegerField()
-    totalRacesLaps = models.IntegerField()
-    totalPodiums = models.IntegerField()
-    totalPodiumRaces = models.IntegerField()
-    totalPoints = models.FloatField()
-    totalPolePositions = models.IntegerField()
-    totalFastestLaps = models.IntegerField()
+    positionNumber = models.IntegerField(null=True, blank=True)
+    positionText = models.CharField(max_length=100, blank=True)
+    bestStartingGridPosition = models.IntegerField(null=True, blank=True)
+    bestRaceResult = models.IntegerField(null=True, blank=True)
+    totalRaceEntries = models.IntegerField(null=True, blank=True)
+    totalRaceWins = models.IntegerField(null=True, blank=True)
+    total1And2Finishes = models.IntegerField(null=True, blank=True)
+    totalRacesLaps = models.IntegerField(null=True, blank=True)
+    totalPodiums = models.IntegerField(null=True, blank=True)
+    totalPodiumRaces = models.IntegerField(null=True, blank=True)
+    totalPoints = models.FloatField(null=True, blank=True)
+    totalPolePositions = models.IntegerField(null=True, blank=True)
+    totalFastestLaps = models.IntegerField(null=True, blank=True)
 
     class Meta:
         verbose_name = 'Sessions Constructors'
 
+# ---
+
 class sessions_constructors_standings(models.Model):
     year = models.ForeignKey(sessions, related_name='year_sessions_constructors_standings', on_delete=models.CASCADE)
-    positionDisplayOrder = models.IntegerField()
-    positionNumber = models.IntegerField()
-    positionText = models.CharField(max_length=100)
+    positionDisplayOrder = models.IntegerField(null=True, blank=True)
+    positionNumber = models.IntegerField(null=True, blank=True)
+    positionText = models.CharField(max_length=100, blank=True)
     constructorID = models.ForeignKey(constructors, related_name='sessions_constructors_standings_constructorID', on_delete=models.CASCADE)
-    enginesManufacturerID = models.ForeignKey(enginesManufacturers, related_name='sessions_constructors_standings_enginesManufacturerID', on_delete=models.CASCADE)
-    points = models.FloatField()
+    enginesManufacturerID = models.ForeignKey(enginesManufacturers, related_name='sessions_constructors_standings_enginesManufacturerID', on_delete=models.CASCADE, null=True, blank=True)
+    points = models.FloatField(null=True, blank=True)
 
     class Meta:
         verbose_name = 'Sessions Constructors Standings'
 
+# ---
+
 class sessions_drivers(models.Model):
     year = models.ForeignKey(sessions, related_name='year_sessions_drivers', on_delete=models.CASCADE)
     driverID = models.ForeignKey(drivers, related_name='sessions_drivers_driverID', on_delete=models.CASCADE)
-    positionNumber = models.IntegerField()
-    positionText = models.CharField(max_length=100)
-    bestStartingGridPosition = models.IntegerField()
-    bestRaceResult = models.IntegerField()
-    totalRaceEntries = models.IntegerField()
-    totalRaceStarts = models.IntegerField()
-    totalRaceWins = models.IntegerField()
-    totalRaceLaps = models.IntegerField()
-    totalPodiums = models.IntegerField()
-    totalPoints = models.FloatField()
-    totalPolePositions = models.IntegerField()
-    totalFastestLaps = models.IntegerField()
-    totalDriverOfTheDay = models.IntegerField()
-    totalGrandSlams = models.IntegerField()
+    positionNumber = models.IntegerField(null=True, blank=True)
+    positionText = models.CharField(max_length=100, blank=True)
+    bestStartingGridPosition = models.IntegerField(null=True, blank=True)
+    bestRaceResult = models.IntegerField(null=True, blank=True)
+    totalRaceEntries = models.IntegerField(null=True, blank=True)
+    totalRaceStarts = models.IntegerField(null=True, blank=True)
+    totalRaceWins = models.IntegerField(null=True, blank=True)
+    totalRaceLaps = models.IntegerField(null=True, blank=True)
+    totalPodiums = models.IntegerField(null=True, blank=True)
+    totalPoints = models.FloatField(null=True, blank=True)
+    totalPolePositions = models.IntegerField(null=True, blank=True)
+    totalFastestLaps = models.IntegerField(null=True, blank=True)
+    totalDriverOfTheDay = models.IntegerField(null=True, blank=True)
+    totalGrandSlams = models.IntegerField(null=True, blank=True)
 
     class Meta:
         verbose_name = 'Sessions Drivers'
 
+# ---
+
 class sessions_drivers_standings(models.Model):
     year = models.ForeignKey(sessions, related_name='year_sessions_drivers_standings', on_delete=models.CASCADE)
-    positionDisplayOrder = models.IntegerField()
-    positionNumber = models.IntegerField()
-    positionText = models.CharField(max_length=100)
+    positionDisplayOrder = models.IntegerField(null=True, blank=True)
+    positionNumber = models.IntegerField(null=True, blank=True)
+    positionText = models.CharField(max_length=100, blank=True)
     driverID = models.ForeignKey(drivers, related_name='sessions_drivers_standings_driverID', on_delete=models.CASCADE)
-    points = models.FloatField()
+    points = models.FloatField(null=True, blank=True)
 
     class Meta:
         verbose_name = 'Sessions Drivers Standings'
 
+# ---
+
 class sessions_engines_manufacturers(models.Model):
     year = models.ForeignKey(sessions, related_name='year_sessions_engines_manufacturers', on_delete=models.CASCADE)
     enginesManufacturerID = models.ForeignKey(enginesManufacturers, related_name='sessions_engines_manufacturers_enginesManufacturerID', on_delete=models.CASCADE)
-    positionNumber = models.IntegerField()
-    positionText = models.CharField(max_length=100)
-    bestStartingGridPosition = models.IntegerField()
-    bestRaceResult = models.IntegerField()
-    totalRaceEntries = models.IntegerField()
-    totalRaceWins = models.IntegerField()
-    totalRaceLaps = models.IntegerField()
-    totalPodiums = models.IntegerField()
-    totalPodiumRaces = models.IntegerField()
-    totalPoints = models.FloatField()
-    totalPolePositions = models.IntegerField()
-    totalFastestLaps = models.IntegerField()
+    positionNumber = models.IntegerField(null=True, blank=True)
+    positionText = models.CharField(max_length=100, blank=True)
+    bestStartingGridPosition = models.IntegerField(null=True, blank=True)
+    bestRaceResult = models.IntegerField(null=True, blank=True)
+    totalRaceEntries = models.IntegerField(null=True, blank=True)
+    totalRaceWins = models.IntegerField(null=True, blank=True)
+    totalRaceLaps = models.IntegerField(null=True, blank=True)
+    totalPodiums = models.IntegerField(null=True, blank=True)
+    totalPodiumRaces = models.IntegerField(null=True, blank=True)
+    totalPoints = models.FloatField(null=True, blank=True)
+    totalPolePositions = models.IntegerField(null=True, blank=True)
+    totalFastestLaps = models.IntegerField(null=True, blank=True)
 
     class Meta:
         verbose_name = 'Sessions Engines Manufacturers'
