@@ -186,7 +186,7 @@ class tyreManufacturers(models.Model):
         verbose_name = 'Tyre Manufacturer'
 
 class races(models.Model):
-    racesID = models.CharField(max_length=15, primary_key=True)
+    racesID = models.IntegerField(primary_key=True)
     year = models.ForeignKey(sessions, related_name='races_year', on_delete=models.CASCADE, null=True, blank=True)
     round = models.IntegerField(null=True, blank=True)
     date = models.DateField(null=True, blank=True)
@@ -681,7 +681,7 @@ class races_sprint_starting_grid_positions(models.Model):
     tyreManufacturersID = models.ForeignKey(tyreManufacturers, related_name='races_sprint_starting_grid_positions_tyresManufacturerID', on_delete=models.CASCADE, null=True, blank=True)
     qualificationPositionNumber = models.IntegerField(null=True, blank=True)
     qualificationPositionText = models.CharField(max_length=100, null=True, blank=True)
-    gridPenalty = models.IntegerField(null=True, blank=True)
+    gridPenalty = models.CharField(max_length=10, null=True, blank=True)
     gridPenaltyPositions = models.IntegerField(null=True, blank=True)
     time = models.DurationField(null=True, blank=True)
     timeMillis = models.IntegerField(null=True, blank=True)
@@ -746,7 +746,7 @@ class races_starting_grid_positions(models.Model):
     tyreManufacturersID = models.ForeignKey(tyreManufacturers, related_name='races_starting_grid_positions_tyresManufacturerID', on_delete=models.CASCADE, null=True, blank=True)
     qualificationPositionNumber = models.IntegerField(null=True, blank=True)
     qualificationPositionText = models.CharField(max_length=100, null=True, blank=True)
-    gridPenalty = models.IntegerField(null=True, blank=True)
+    gridPenalty = models.CharField(max_length=10, null=True, blank=True)
     gridPenaltyPositions = models.IntegerField(null=True, blank=True)
     time = models.DurationField(null=True, blank=True)
     timeMillis = models.IntegerField(null=True, blank=True)
@@ -813,7 +813,7 @@ class sessions_entrants_drivers(models.Model):
     driverID = models.ForeignKey(drivers, related_name='sessions_entrants_drivers_driverID', on_delete=models.CASCADE)
     constructorID = models.ForeignKey(constructors, related_name='sessions_entrants_drivers_constructorID', on_delete=models.CASCADE)
     enginesManufacturerID = models.ForeignKey(enginesManufacturers, related_name='sessions_entrants_drivers_enginesManufacturerID', on_delete=models.CASCADE)
-    rounds = models.IntegerField(null=True, blank=True)
+    rounds = models.CharField(max_length=100, null=True, blank=True)
     roundsText = models.CharField(max_length=100, blank=True)
     testDriver = models.BooleanField(default=False)
 

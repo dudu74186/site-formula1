@@ -92,6 +92,7 @@ body {
     float: right;
     margin-right: 1%;
     font-family: "f1-italic", sans-serif;
+
 }
 
 .aside h1 {
@@ -99,4 +100,12 @@ body {
     font-size: 2rem;
     color: #000000;
     text-align: left;
+}
+
+.card {
+    background-color: #d8cccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+    margin-bottom: 16px;
 }

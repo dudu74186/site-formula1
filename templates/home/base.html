@@ -43,9 +43,14 @@
         <div class="aside">
             <h1>Classificação</h1>
             <div class="container"> 
-                
-                {% block tabela %}
-                {% endblock tabela %}
+                {% for pilot in pilots %}
+                    <div class="card">
+
+                        <p><strong>Piloto:</strong> {{ pilot.driverID_id }}</p>
+                        <p><strong>Pontos:</strong> {{ pilot.points }}</p>
+
+                    </div>
+                {% endfor %}
             </div>
         </div>
             
